@@ -5,7 +5,7 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v and.sv
+PROJECT_SOURCES = project.v bsr.sv bypass_register.sv defines.sv device_identification_register.sv instruction_register.sv jtag_test_logic.sv tap_controller.sv
 
 ifneq ($(GATES),yes)
 
