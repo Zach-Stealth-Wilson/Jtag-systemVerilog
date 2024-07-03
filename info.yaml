@@ -23,7 +23,8 @@ project:
     - "defines.sv"
     - "device_identification_register.sv"
     - "instruction_register.sv"
-    - "jtag_test_logic.sv tap_controller.sv"
+    - "tt_um_jtag_test_logic.sv"
+    - "tap_controller.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
