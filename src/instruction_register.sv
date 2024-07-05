@@ -6,7 +6,7 @@ module instruction_register (
     input                          tl_reset, 
     input                          captureIR,
     input                          updateIR,
-    output                         tdo,
+    output logic                   tdo,
     output logic [`INST_COUNT-1:0] instructions
 );
 
