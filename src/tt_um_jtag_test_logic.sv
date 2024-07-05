@@ -20,6 +20,7 @@ logic shiftIR;
 logic captureIR;
 logic ir_clk;
 logic updateIR;
+logic updateDR;
 logic shiftDR;
 logic captureDR;
 logic clk_dr;
