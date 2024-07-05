@@ -18,7 +18,7 @@ logic [`INST_COUNT-1:0]    decoded;
 // assign tdo = shift_reg[0];
 
 // Shift register
-always @(posedge tck_ir) begin
+/*always @(posedge tck_ir) begin
      shift_reg[`INST_REG_WIDTH] = tdi;
     shift_reg[0] <= shift_reg[1] || captureIR;  // 7.1.1 (d)
 end
@@ -29,7 +29,37 @@ for (i = `INST_REG_WIDTH; i > 1; i = i - 1) begin
         shift_reg[i-1] <= shift_reg[i] && ~captureIR;  // 7.1.1 (e)
     end
 end
+*/
 
+
+    // Shift register
+always @(posedge tck_ir or posedge tl_reset) begin
+    if (tl_reset) begin
+        shift_reg <= '0;
+    end else begin
+        shift_reg <= {tdi, shift_reg[`INST_REG_WIDTH:1]};
+        shift_reg[0] <= shift_reg[1] || captureIR;  // 7.1.1 (d)
+    end
+end
+
+assign tdo = shift_reg[0]; // Continuous assignment for tdo
+
+// Shift register logic for intermediate bits
+genvar i;
+generate
+    for (i = `INST_REG_WIDTH; i > 1; i = i - 1) begin : shift_reg_update
+        always @(posedge tck_ir or posedge tl_reset) begin
+            if (tl_reset) begin
+                shift_reg[i-1] <= 0;
+            end else begin
+                shift_reg[i-1] <= shift_reg[i] && ~captureIR;  // 7.1.1 (e)
+            end
+        end
+    end
+endgenerate
+
+
+    
 // Instruction decoder
 //8.1.1 (e)
 always_comb begin
