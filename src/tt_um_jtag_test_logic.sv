@@ -16,7 +16,7 @@ module tt_um_jtag_test_logic (
 // TAP controller logic
 logic reset;
 logic tdo_en;
-logic shiftIR;
+output logic shiftIR;
 logic captureIR;
 logic ir_clk;
 logic updateIR;
