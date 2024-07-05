@@ -32,17 +32,17 @@ end
 */
 
 
-    // Shift register
+// Shift register
 always @(posedge tck_ir or posedge tl_reset) begin
     if (tl_reset) begin
         shift_reg <= '0;
+        tdo <= 0; // Ensure tdo is also reset
     end else begin
         shift_reg <= {tdi, shift_reg[`INST_REG_WIDTH:1]};
         shift_reg[0] <= shift_reg[1] || captureIR;  // 7.1.1 (d)
+        tdo <= shift_reg[0]; // Nonblocking assignment to tdo
     end
 end
-
-assign tdo = shift_reg[0]; // Continuous assignment for tdo
 
 // Shift register logic for intermediate bits
 genvar i;
@@ -57,7 +57,6 @@ generate
         end
     end
 endgenerate
-
 
     
 // Instruction decoder
