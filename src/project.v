@@ -17,12 +17,12 @@ module tt_um_example (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uio_in = 0;
+ 
   assign uio_out = 0;
   assign uio_oe  = 0;
 
   // List all unused inputs to prevent warnings .a(ui_in[7:0]), .b(uio_in[7:0])
-    wire _unused = &{ena, 1'b0, ui_in[7:4], 1'b0};
+    wire _unused = &{ena, uio_in[7:0], ui_in[7:4], 1'b0};
 
     tt_um_jtag_test_logic top(.tck(clk), .tms(ui_in[0]), .tdi(ui_in[1]), .trst(rst_n), .tdo(uo_out[0]), .bsr_tdi(uo_out[1]), .bsr_clk(uo_out[2]), .bsr_update(uo_out[3]), .bsr_shift(uo_out[4]), .bsr_mode(uo_out[5]), .bsr_tdo(ui_in[2]), .sys_clk(ui_in[3]), .dbg_clk(uo_out[6]), .dm_reset(uo_out[7]) );
 
